@@ -16,7 +16,7 @@ export default function Wyklad({ labGradeFromTab, onGradesCalculated }: WykladPr
 
   // jak użytkownik chce użyć L z zakładki laboratorium
   useEffect(() => {
-    if (useLabFromTab && labGradeFromTab !== null) {
+    if (useLabFromTab && labGradeFromTab !== null && labGradeFromTab !== undefined) {
       setLabL(labGradeFromTab)
     }
   }, [useLabFromTab, labGradeFromTab])
@@ -178,13 +178,13 @@ export default function Wyklad({ labGradeFromTab, onGradesCalculated }: WykladPr
                 Szczegóły obliczeń:
               </p>
               <p className="text-sm mb-1">Wzór: Ok = 0.6 × Z + 0.4 × (30×K + 45×L) / 75</p>
-              <p className="text-sm">Z (test) = {testGrade.toFixed(1)}</p>
+              <p className="text-sm">Z (test) = {testGrade?.toFixed(1) ?? 'N/A'}</p>
               <p className="text-sm">K (kurs) = {courseK.toFixed(1)}</p>
               <p className="text-sm">L (lab) = {labL.toFixed(2)}</p>
               <p className="text-sm mt-2 font-bold">
-                = 0.6 × {testGrade.toFixed(1)} + 0.4 × (30×{courseK.toFixed(1)} + 45×{labL.toFixed(2)}) / 75
+                = 0.6 × {testGrade?.toFixed(1) ?? 'N/A'} + 0.4 × (30×{courseK.toFixed(1)} + 45×{labL.toFixed(2)}) / 75
               </p>
-              <p className="text-sm font-bold">= {finalGrade.toFixed(2)}</p>
+              <p className="text-sm font-bold">= {finalGrade?.toFixed(2) ?? 'N/A'}</p>
             </div>
 
             {finalGrade >= 4.5 && (

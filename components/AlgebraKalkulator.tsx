@@ -163,7 +163,7 @@ export default function AlgebraKalkulator() {
                 <Calculator className="w-5 h-5" />
                 Składowe oceny:
               </p>
-              <p className="text-sm">Ocena z kolokwium: {ocenaBazowa.toFixed(1)}</p>
+              <p className="text-sm">Ocena z kolokwium: {ocenaBazowa?.toFixed(1) ?? 'N/A'}</p>
               <p className="text-sm">Bonus z aktywności: +{bonusAktywnosc.toFixed(2)}</p>
               <p className="text-sm font-bold mt-2">= {ocenaKoncowa.toFixed(2)} (max 5.0)</p>
             </div>
