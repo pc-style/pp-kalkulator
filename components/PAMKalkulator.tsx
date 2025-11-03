@@ -1,9 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Calculator, Users, TrendingUp, CheckCircle, AlertCircle } from 'lucide-react'
 
-export default function PAMKalkulator() {
+interface PAMKalkulatorProps {
+  onGradeCalculated?: (grade: number | null) => void
+}
+
+export default function PAMKalkulator({ onGradeCalculated }: PAMKalkulatorProps) {
   const [kolokwiumPunkty, setKolokwiumPunkty] = useState<number>(10)
   const [aktywnosc, setAktywnosc] = useState<number>(5)
   const [prawaGrupowe, setPrawaGrupowe] = useState<number>(5)
@@ -35,6 +39,13 @@ export default function PAMKalkulator() {
     : null
 
   const czyZaliczone = ocenaBazowa !== null && ocenaBazowa >= 3.0
+
+  // przekazujemy wynik do rodzica
+  useEffect(() => {
+    if (onGradeCalculated) {
+      onGradeCalculated(ocenaKoncowa)
+    }
+  }, [ocenaKoncowa, onGradeCalculated])
 
   return (
     <div className="space-y-6">
