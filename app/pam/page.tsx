@@ -17,16 +17,16 @@ export default function PAMPage() {
   const [egzaminGrade, setEgzaminGrade] = useState<number | null>(null)
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-4 md:p-8">
+    <main className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 p-8 md:p-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
         {/* przycisk powrotu */}
-        <Link href="/" className="inline-flex items-center gap-2 mb-6 neo-button bg-gray-300">
+        <Link href="/" className="inline-flex items-center gap-2 mb-12 neo-button">
           <ArrowLeft className="w-5 h-5" />
           Powrót do menu
         </Link>
 
         {/* nagłówek */}
-        <div className="neo-card mb-8 bg-pink-400">
+        <div className="neo-card mb-12 bg-pink-400">
           <h1 className="text-4xl md:text-5xl font-black mb-2 flex items-center gap-3">
             <Calculator className="w-10 h-10" />
             Kalkulator PAM
@@ -35,7 +35,7 @@ export default function PAMPage() {
         </div>
 
         {/* nawigacja zakładkowa */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="flex flex-col md:flex-row gap-4 mb-12">
           <button
             onClick={() => setActiveTab('cwiczenia')}
             className={`neo-tab flex items-center gap-2 justify-center ${

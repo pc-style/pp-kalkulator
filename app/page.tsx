@@ -63,10 +63,10 @@ const subjects = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-50 to-blue-100 p-4 md:p-8">
+    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-50 to-blue-100 p-8 md:p-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
         {/* nagłówek główny */}
-        <div className="neo-card mb-8 bg-pink-300">
+        <div className="neo-card mb-12 bg-pink-300">
           <h1 className="text-4xl md:text-6xl font-black mb-3 flex items-center gap-3">
             <BookOpen className="w-12 h-12" />
             Kalkulatory PCz
@@ -76,7 +76,7 @@ export default function Home() {
         </div>
 
         {/* siatka przedmiotów */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8">
           {subjects.map((subject) => {
             const Icon = subject.icon
 

@@ -19,16 +19,16 @@ export default function PPCalculator() {
   const [courseGrade, setCourseGrade] = useState<number | null>(null)
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-50 to-blue-100 p-4 md:p-8">
+    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-50 to-blue-100 p-8 md:p-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
         {/* przycisk powrotu */}
-        <Link href="/" className="inline-flex items-center gap-2 mb-6 neo-button bg-gray-300">
+        <Link href="/" className="inline-flex items-center gap-2 mb-12 neo-button">
           <ArrowLeft className="w-5 h-5" />
           Powrót do menu
         </Link>
 
         {/* nagłówek */}
-        <div className="neo-card mb-8 bg-yellow-400">
+        <div className="neo-card mb-12 bg-yellow-400">
           <h1 className="text-4xl md:text-5xl font-black mb-2 flex items-center gap-3">
             <Calculator className="w-10 h-10" />
             Kalkulator PP
@@ -37,7 +37,7 @@ export default function PPCalculator() {
         </div>
 
         {/* nawigacja zakładkowa */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="flex flex-col md:flex-row gap-4 mb-12">
           <button
             onClick={() => setActiveTab('lab')}
             className={`neo-tab flex items-center gap-2 justify-center ${
