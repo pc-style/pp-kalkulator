@@ -2,22 +2,18 @@
 
 import { useState } from 'react'
 import { BookOpen, TrendingUp, CheckCircle, AlertCircle } from 'lucide-react'
+import {
+  calculateKolokwiumGrade,
+  DEFAULT_KOLOKWIUM_THRESHOLDS,
+  isGradePassed,
+} from '@/utils/calculations'
 
 export default function AlgebraWyklad() {
   const [kolokwiumPunkty, setKolokwiumPunkty] = useState<number>(10)
 
   // przeliczenie punktów na ocenę (wykład - tylko kolokwium)
-  const obliczOcene = (punkty: number): number | null => {
-    if (punkty < 10) return null // niezaliczone
-    if (punkty >= 18) return 5.0
-    if (punkty >= 16) return 4.5
-    if (punkty >= 14) return 4.0
-    if (punkty >= 12) return 3.5
-    return 3.0
-  }
-
-  const ocena = obliczOcene(kolokwiumPunkty)
-  const czyZaliczone = ocena !== null && ocena >= 3.0
+  const ocena = calculateKolokwiumGrade(kolokwiumPunkty, 10, DEFAULT_KOLOKWIUM_THRESHOLDS)
+  const czyZaliczone = isGradePassed(ocena)
 
   return (
     <div className="space-y-6">

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kalkulator PP - Podstawy Programowania",
-  description: "Kalkulator punktów i ocen z Podstaw Programowania (PCz)",
+  title: "Kalkulatory PCz - Politechnika Częstochowska",
+  description: "Kalkulatory ocen z przedmiotów na Politechnice Częstochowskiej",
 };
 
 export default function RootLayout({

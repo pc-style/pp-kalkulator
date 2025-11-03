@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { Calculator, Users, TrendingUp, CheckCircle, AlertCircle } from 'lucide-react'
+import {
+  calculateKolokwiumGrade,
+  calculateActivityBonus,
+  DEFAULT_KOLOKWIUM_THRESHOLDS,
+  isGradePassed,
+} from '@/utils/calculations'
 
 interface PAMKalkulatorProps {
   onGradeCalculated?: (grade: number | null) => void
@@ -13,32 +19,22 @@ export default function PAMKalkulator({ onGradeCalculated }: PAMKalkulatorProps)
   const [prawaGrupowe, setPrawaGrupowe] = useState<number>(5)
 
   // przeliczenie punktów z kolokwium na ocenę bazową
-  const obliczOceneBazowa = (punkty: number): number | null => {
-    if (punkty < 10) return null // niezaliczone
-    if (punkty >= 18) return 5.0
-    if (punkty >= 16) return 4.5
-    if (punkty >= 14) return 4.0
-    if (punkty >= 12) return 3.5
-    return 3.0
-  }
+  const ocenaBazowa = calculateKolokwiumGrade(
+    kolokwiumPunkty,
+    10,
+    DEFAULT_KOLOKWIUM_THRESHOLDS
+  )
 
   // bonus z aktywności (0-1.0)
-  const obliczBonusAktywnosc = (): number => {
-    const sumaAktywnosci = aktywnosc + prawaGrupowe
-    // max 20 punktów z aktywności -> max +1.0 do oceny
-    const bonus = (sumaAktywnosci / 20) * 1.0
-    return Math.min(bonus, 1.0) // max +1.0
-  }
-
-  const ocenaBazowa = obliczOceneBazowa(kolokwiumPunkty)
-  const bonusAktywnosc = obliczBonusAktywnosc()
+  const sumaAktywnosci = aktywnosc + prawaGrupowe
+  const bonusAktywnosc = calculateActivityBonus(sumaAktywnosci, 20, 1.0)
 
   // ocena końcowa
   const ocenaKoncowa = ocenaBazowa !== null
     ? Math.min(ocenaBazowa + bonusAktywnosc, 5.0)
     : null
 
-  const czyZaliczone = ocenaBazowa !== null && ocenaBazowa >= 3.0
+  const czyZaliczone = isGradePassed(ocenaBazowa)
 
   // przekazujemy wynik do rodzica
   useEffect(() => {

@@ -15,10 +15,12 @@ export default function ALGPage() {
     <main className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 p-8 md:p-12 py-12 md:py-16">
       <div className="max-w-6xl mx-auto">
         {/* przycisk powrotu */}
-        <Link href="/" className="inline-flex items-center gap-2 mb-12 neo-button">
-          <ArrowLeft className="w-5 h-5" />
-          Powrót do menu
-        </Link>
+        <div className="mb-8">
+          <Link href="/" className="inline-flex items-center gap-2 neo-button">
+            <ArrowLeft className="w-5 h-5" />
+            Powrót do menu
+          </Link>
+        </div>
 
         {/* nagłówek */}
         <div className="neo-card mb-12 bg-purple-400">

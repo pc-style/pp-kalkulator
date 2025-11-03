@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { BookOpen, Award, Calculator, AlertCircle, CheckCircle } from 'lucide-react'
+import { calculatePercentageGrade, DEFAULT_TEST_THRESHOLDS } from '@/utils/calculations'
 
 interface WykladProps {
   labGradeFromTab?: number | null
@@ -22,16 +23,7 @@ export default function Wyklad({ labGradeFromTab, onGradesCalculated }: WykladPr
   }, [useLabFromTab, labGradeFromTab])
 
   // przeliczenie % testu na ocenę
-  const calculateTestGrade = (percent: number): number | null => {
-    if (percent < 50) return null // nie zda
-    if (percent >= 95) return 5.0
-    if (percent >= 85) return 4.5
-    if (percent >= 75) return 4.0
-    if (percent >= 65) return 3.5
-    return 3.0
-  }
-
-  const testGrade = calculateTestGrade(testPercent)
+  const testGrade = calculatePercentageGrade(testPercent, DEFAULT_TEST_THRESHOLDS)
 
   // końcowa ocena z całego PP
   const calculateFinalGrade = (): number | null => {

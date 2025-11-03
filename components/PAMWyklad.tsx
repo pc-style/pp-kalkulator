@@ -2,6 +2,11 @@
 
 import { useState } from 'react'
 import { BookOpen, TrendingUp, CheckCircle, AlertCircle, Calendar } from 'lucide-react'
+import {
+  calculatePercentageGrade,
+  DEFAULT_EXAM_THRESHOLDS,
+  isGradePassed,
+} from '@/utils/calculations'
 
 interface PAMWykladProps {
   onEgzaminCalculated?: (grade: number | null) => void
@@ -11,17 +16,8 @@ export default function PAMWyklad({ onEgzaminCalculated }: PAMWykladProps) {
   const [egzaminProcent, setEgzaminProcent] = useState<number>(60)
 
   // przeliczenie % na ocenę
-  const obliczOcene = (procent: number): number | null => {
-    if (procent < 50) return null // niezaliczone
-    if (procent >= 90) return 5.0
-    if (procent >= 80) return 4.5
-    if (procent >= 70) return 4.0
-    if (procent >= 60) return 3.5
-    return 3.0
-  }
-
-  const ocena = obliczOcene(egzaminProcent)
-  const czyZaliczone = ocena !== null && ocena >= 3.0
+  const ocena = calculatePercentageGrade(egzaminProcent, DEFAULT_EXAM_THRESHOLDS)
+  const czyZaliczone = isGradePassed(ocena)
 
   // przekazujemy ocenę do rodzica
   if (onEgzaminCalculated && ocena !== (onEgzaminCalculated as any).lastValue) {

@@ -2,6 +2,12 @@
 
 import { useState } from 'react'
 import { Calculator, Users, TrendingUp, CheckCircle, AlertCircle } from 'lucide-react'
+import {
+  calculateKolokwiumGrade,
+  calculateActivityBonus,
+  DEFAULT_KOLOKWIUM_THRESHOLDS,
+  isGradePassed,
+} from '@/utils/calculations'
 
 export default function AlgebraKalkulator() {
   const [kolokwiumPunkty, setKolokwiumPunkty] = useState<number>(10)
@@ -9,39 +15,32 @@ export default function AlgebraKalkulator() {
   const [prawaGrupowe, setPrawaGrupowe] = useState<number>(5)
 
   // przeliczenie punktów z kolokwium na ocenę bazową
-  const obliczOceneBazowa = (punkty: number): number | null => {
-    if (punkty < 10) return null // niezaliczone
-    if (punkty >= 18) return 5.0
-    if (punkty >= 16) return 4.5
-    if (punkty >= 14) return 4.0
-    if (punkty >= 12) return 3.5
-    return 3.0
-  }
+  const ocenaBazowa = calculateKolokwiumGrade(
+    kolokwiumPunkty,
+    10,
+    DEFAULT_KOLOKWIUM_THRESHOLDS
+  )
 
   // bonus z aktywności (0-1.0)
-  const obliczBonusAktywnosc = (): number => {
-    const sumaAktywnosci = aktywnosc + prawaGrupowe
-    // max 20 punktów z aktywności -> max +1.0 do oceny
-    const bonus = (sumaAktywnosci / 20) * 1.0
-    return Math.min(bonus, 1.0) // max +1.0
-  }
-
-  const ocenaBazowa = obliczOceneBazowa(kolokwiumPunkty)
-  const bonusAktywnosc = obliczBonusAktywnosc()
+  const sumaAktywnosci = aktywnosc + prawaGrupowe
+  const bonusAktywnosc = calculateActivityBonus(sumaAktywnosci, 20, 1.0)
 
   // ocena końcowa
   const ocenaKoncowa = ocenaBazowa !== null
     ? Math.min(ocenaBazowa + bonusAktywnosc, 5.0)
     : null
 
-  const czyZaliczone = ocenaBazowa !== null && ocenaBazowa >= 3.0
+  const czyZaliczone = isGradePassed(ocenaBazowa)
 
   return (
-    <div className="space-y-6">
+    <section className="space-y-6" aria-labelledby="alg-kalkulator-heading">
+      <h1 id="alg-kalkulator-heading" className="sr-only">
+        Kalkulator Algebra Liniowa i Geometria - Ćwiczenia
+      </h1>
       {/* kolokwium */}
-      <div className="neo-card">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <Calculator className="w-6 h-6" />
+      <section className="neo-card" aria-labelledby="kolokwium-heading">
+        <h2 id="kolokwium-heading" className="text-2xl font-bold mb-4 flex items-center gap-2">
+          <Calculator className="w-6 h-6" aria-hidden="true" />
           Kolokwium
         </h2>
         <p className="text-sm mb-4 bg-gray-100 p-3 border-2 border-black">
@@ -49,21 +48,29 @@ export default function AlgebraKalkulator() {
         </p>
 
         <div className="mb-4">
-          <label className="block font-bold mb-2">Punkty z kolokwium (0-20):</label>
+          <label htmlFor="kolokwium-punkty" className="block font-bold mb-2">
+            Punkty z kolokwium (0-20):
+          </label>
           <input
+            id="kolokwium-punkty"
             type="number"
             value={kolokwiumPunkty}
             onChange={(e) => setKolokwiumPunkty(Math.max(0, Math.min(20, parseInt(e.target.value) || 0)))}
             className="neo-input w-full md:w-64"
             min="0"
             max="20"
+            aria-label="Punkty z kolokwium, maksimum 20 punktów"
+            aria-describedby="kolokwium-description"
           />
+          <span id="kolokwium-description" className="sr-only">
+            Maksymalnie 20 punktów. Minimum 10 punktów na zaliczenie.
+          </span>
         </div>
 
         <div className="p-4 bg-blue-100 border-4 border-black">
           {ocenaBazowa === null ? (
-            <div className="flex items-center gap-2 text-red-600">
-              <AlertCircle className="w-5 h-5" />
+            <div className="flex items-center gap-2 text-red-600" role="alert">
+              <AlertCircle className="w-5 h-5" aria-hidden="true" />
               <p className="font-bold">Niezaliczone - mniej niż 10 pkt!</p>
             </div>
           ) : (
@@ -85,12 +92,12 @@ export default function AlgebraKalkulator() {
             <li>• &lt;10 pkt → niezaliczone</li>
           </ul>
         </div>
-      </div>
+      </section>
 
       {/* aktywność */}
-      <div className="neo-card">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <Users className="w-6 h-6" />
+      <section className="neo-card" aria-labelledby="aktywnosc-heading">
+        <h2 id="aktywnosc-heading" className="text-2xl font-bold mb-4 flex items-center gap-2">
+          <Users className="w-6 h-6" aria-hidden="true" />
           Aktywność i prace grupowe
         </h2>
         <p className="text-sm mb-4 bg-gray-100 p-3 border-2 border-black">
@@ -99,25 +106,33 @@ export default function AlgebraKalkulator() {
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block font-bold mb-2">Aktywność przy tablicy (0-10):</label>
+            <label htmlFor="aktywnosc-tablica" className="block font-bold mb-2">
+              Aktywność przy tablicy (0-10):
+            </label>
             <input
+              id="aktywnosc-tablica"
               type="number"
               value={aktywnosc}
               onChange={(e) => setAktywnosc(Math.max(0, Math.min(10, parseInt(e.target.value) || 0)))}
               className="neo-input w-full"
               min="0"
               max="10"
+              aria-label="Punkty z aktywności przy tablicy, maksimum 10"
             />
           </div>
           <div>
-            <label className="block font-bold mb-2">Prace grupowe (0-10):</label>
+            <label htmlFor="prace-grupowe" className="block font-bold mb-2">
+              Prace grupowe (0-10):
+            </label>
             <input
+              id="prace-grupowe"
               type="number"
               value={prawaGrupowe}
               onChange={(e) => setPrawaGrupowe(Math.max(0, Math.min(10, parseInt(e.target.value) || 0)))}
               className="neo-input w-full"
               min="0"
               max="10"
+              aria-label="Punkty z prac grupowych, maksimum 10"
             />
           </div>
         </div>
@@ -126,12 +141,12 @@ export default function AlgebraKalkulator() {
           <p className="font-bold">Bonus z aktywności: +{bonusAktywnosc.toFixed(2)}</p>
           <p className="text-sm mt-1">Suma aktywności: {aktywnosc + prawaGrupowe} / 20 pkt</p>
         </div>
-      </div>
+      </section>
 
       {/* wynik końcowy */}
-      <div className="neo-card bg-purple-100">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <TrendingUp className="w-6 h-6" />
+      <section className="neo-card bg-purple-100" aria-labelledby="wynik-heading">
+        <h2 id="wynik-heading" className="text-2xl font-bold mb-4 flex items-center gap-2">
+          <TrendingUp className="w-6 h-6" aria-hidden="true" />
           Ocena końcowa z zaliczenia
         </h2>
 
@@ -151,8 +166,8 @@ export default function AlgebraKalkulator() {
               <p className="text-lg mt-2">Algebra Liniowa i Geometria</p>
 
               {czyZaliczone && (
-                <div className="mt-4 flex items-center gap-2 text-green-700">
-                  <CheckCircle className="w-6 h-6" />
+                <div className="mt-4 flex items-center gap-2 text-green-700" role="status" aria-live="polite">
+                  <CheckCircle className="w-6 h-6" aria-hidden="true" />
                   <p className="font-bold">ZALICZONE!</p>
                 </div>
               )}
@@ -169,7 +184,7 @@ export default function AlgebraKalkulator() {
             </div>
           </div>
         )}
-      </div>
+      </section>
 
       {/* info o poprawce */}
       {!czyZaliczone && (
@@ -190,6 +205,6 @@ export default function AlgebraKalkulator() {
           </ul>
         </div>
       )}
-    </div>
+    </section>
   )
 }
