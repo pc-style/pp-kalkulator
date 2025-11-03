@@ -36,10 +36,10 @@ const subjects = [
     id: 'pam',
     name: 'Podstawy Analizy Matematycznej',
     shortName: 'PAM',
-    description: 'Wkrótce dostępne...',
+    description: 'Kalkulator ocen z kolokwium i aktywności',
     icon: Calculator,
     color: 'bg-pink-400',
-    available: false,
+    available: true,
   },
   {
     id: 'faipe',
