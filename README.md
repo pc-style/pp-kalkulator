@@ -1,98 +1,106 @@
-# Kalkulatory PCz
+# kalkulatory pcz
 
-Aplikacja webowa do obliczania punktów i ocen z przedmiotów na Politechnice Częstochowskiej.
+hej, to jest strona do liczenia ocen z przedmiotów na politechnice częstochowskiej. 
+zrobiłem to bo miałem dość liczenia w excelu. działa i tyle.
 
-## Dostępne kalkulatory
+## co tu jest
 
-### ✅ Podstawy Programowania (PP)
-Kompleksowy kalkulator z trzema zakładkami:
-- **Laboratorium**: punkty z aktywności, współczynniki (as, p), oceny z kolokwiów i końcowa ocena L
-- **Wykład**: ocena z testu końcowego, ocena z kursu (K) i końcowa ocena z całego przedmiotu (Ok)
-- **Podsumowanie**: zbiorczy widok wszystkich ocen i statusu zaliczenia
+### ✅ podstawy programowania (pp)
+kompletny kalkulator z trzema zakładkami:
+- **laboratorium**: punkty z aktywności, współczynniki (as, p), oceny z kolokwiów i końcowa ocena L
+- **wykład**: ocena z testu końcowego, ocena z kursu (K) i końcowa ocena z całego przedmiotu (Ok)
+- **podsumowanie**: wszystko w jednym miejscu, żeby było wiadomo czy zaliczone czy nie
 
-### ✅ Algebra Liniowa i Geometria (ALG)
-Kalkulator z dwiema zakładkami:
-- **Ćwiczenia**: kolokwium (max 20 pkt) + aktywność przy tablicy + prace grupowe
-- **Wykład**: kolokwium zaliczeniowe (quizy nie liczą się do oceny końcowej)
+### ✅ algebra liniowa i geometria (alg)
+dwie zakładki:
+- **ćwiczenia**: kolokwium (max 20 pkt) + aktywność przy tablicy + prace grupowe
+- **wykład**: kolokwium zaliczeniowe (quizy nie liczą się do oceny końcowej, sorry)
 
-### ✅ Podstawy Analizy Matematycznej (PAM)
-- Kolokwium (max 20 pkt, min 10 pkt na zaliczenie)
-- Aktywność przy tablicy
-- Prace wykonywane w grupach
-- System bonusów z aktywności
+### ✅ podstawy analizy matematycznej (pam)
+- kolokwium (max 20 pkt, min 10 pkt na zaliczenie)
+- aktywność przy tablicy
+- prace wykonywane w grupach
+- system bonusów z aktywności - można podbić ocenę!
 
-### ⏳ Wkrótce dostępne
-- AiSD - Algorytmy i Struktury Danych
-- FAIPE - Foundations of AI and Prompt Engineering
-- PrakP - Praktyka Programowania
+### ⏳ wkrótce dostępne
+- aisd - algorytmy i struktury danych (jak będę miał czas)
+- faipe - foundations of ai and prompt engineering
+- prakp - praktyka programowania
 
-## Technologie
+## technologie
 
-- **Next.js 16** (App Router)
-- **React 19**
-- **TypeScript**
-- **Tailwind CSS 3.4.1**
-- **lucide-react** (ikony)
+- **next.js 16** (app router) - działa dobrze, nie pytaj czemu
+- **react 19** - najnowsze rzeczy
+- **typescript** - żeby było mniej błędów
+- **tailwind css 3.4.1** - szybkie stylowanie
+- **lucide-react** - ikony, są fajne
 
-## Uruchomienie lokalnie
+## jak to uruchomić lokalnie
 
 ```bash
 npm install
 npm run dev
 ```
 
-Aplikacja będzie dostępna pod adresem `http://localhost:3000`
+otwórz `http://localhost:3000` i gotowe. proste, prawda?
 
-## Deployment na Vercel
+## deployment na vercel
 
-1. Wrzuć kod do repozytorium GitHub
-2. Połącz z Vercel
-3. Vercel automatycznie wykryje Next.js i zbuduje aplikację
-4. Gotowe!
+1. wrzuć kod na github
+2. połącz z vercel (zrobi to automatycznie dla next.js)
+3. czekaj aż się zbuduje
+4. działa!
 
-Lub użyj Vercel CLI:
-
+albo użyj cli:
 ```bash
 npm install -g vercel
 vercel
 ```
 
-## Styl UI - Neo-Brutalism
+## styl ui - neo-brutalism
 
-Aplikacja używa stylu **neo-brutalism**:
-- Grube obramowania (4px border-black)
-- Mocne cienie (shadow offset 8px/4px)
-- Płaskie kolory (żółty, różowy, niebieski, fioletowy)
-- Duże nagłówki i inputy
-- Brak gradientów, wszystko płaskie i czytelne
-- Responsywne (mobile: 1 kolumna, desktop: multi-column)
+strona używa stylu neo-brutalism bo wygląda cool:
+- grube obramowania (4-6px border-black) - wygląda jakby ktoś użył flamastra
+- mocne cienie (shadow offset 8px/12px) - wszystko się wygląda jak z kartki
+- płaskie kolory (żółty, różowy, niebieski, fioletowy) - żywe, bez gradientów
+- duże nagłówki i inputy - łatwo kliknąć
+- responsywne (mobile: 1 kolumna, desktop: multi-column) - działa na telefonie też
 
-## Dodawanie nowych przedmiotów
+nie ma tu płynnych przejść i pastelowych kolorów. tylko hardcore design.
 
-1. Dodaj przedmiot do `app/page.tsx` w tablicy `subjects`
-2. Ustaw `available: true`
-3. Stwórz katalog `app/{id}/` (np. `app/aisd/`)
-4. Dodaj komponent kalkulatora w `components/`
-5. Zbuduj stronę `page.tsx` z zakładkami (opcjonalnie)
+## dodawanie nowych przedmiotów
 
-## Struktura projektu
+1. dodaj przedmiot do `app/page.tsx` w tablicy `subjects`
+2. ustaw `available: true` (inaczej będzie szare i nieaktywne)
+3. stwórz katalog `app/{id}/` (np. `app/aisd/`)
+4. dodaj komponent kalkulatora w `components/`
+5. zbuduj stronę `page.tsx` z zakładkami (jeśli chcesz)
+
+kod jest open source, więc możesz sobie zrobić fork i dodać swoje przedmioty. 
+jak zrobisz coś fajnego, zrób pull request - może wrzucę to do głównego repo.
+
+## struktura projektu
 
 ```
 app/
-├── page.tsx          # Menu główne
-├── pp/page.tsx       # Kalkulator PP
-├── alg/page.tsx      # Kalkulator ALG
-└── pam/page.tsx      # Kalkulator PAM
+├── page.tsx          # menu główne (tutaj wybierasz przedmiot)
+├── pp/page.tsx       # kalkulator pp
+├── alg/page.tsx      # kalkulator alg
+└── pam/page.tsx      # kalkulator pam
 
 components/
-├── Laboratorium.tsx      # PP - Laboratorium
-├── Wyklad.tsx            # PP - Wykład
-├── Podsumowanie.tsx      # PP - Podsumowanie
-├── AlgebraKalkulator.tsx # ALG - Ćwiczenia
-├── AlgebraWyklad.tsx     # ALG - Wykład
-└── PAMKalkulator.tsx     # PAM
+├── Laboratorium.tsx      # pp - laboratorium
+├── Wyklad.tsx            # pp - wykład
+├── Podsumowanie.tsx      # pp - podsumowanie
+├── AlgebraKalkulator.tsx # alg - ćwiczenia
+├── AlgebraWyklad.tsx     # alg - wykład
+└── PAMKalkulator.tsx     # pam
 ```
 
-## Licencja
+## licencja
 
-Open source - użyj jak chcesz.
+open source - użyj jak chcesz. jeśli coś zmienisz i będzie lepsze, daj znać.
+
+---
+
+made by adam krupa. miłego używania!

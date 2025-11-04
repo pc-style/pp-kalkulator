@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import WelcomeWrapper from "@/components/WelcomeWrapper";
 
 export const metadata: Metadata = {
   title: "Kalkulatory PCz - Politechnika Częstochowska",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body>
+        <WelcomeWrapper />
+        {children}
+      </body>
     </html>
   );
 }

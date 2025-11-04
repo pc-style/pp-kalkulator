@@ -119,9 +119,17 @@ export default function Home() {
 
         {/* stopka */}
         <div className="mt-12 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 mb-3">
             Masz pomysł na kolejny przedmiot? Dodaj go sam - kod jest open source!
           </p>
+          <a
+            href="https://github.com/pc-style/pp-kalkulator"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-gray-200 border-[4px] border-black px-6 py-3 font-black text-sm hover:bg-gray-300 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
+          >
+            ZOBACZ NA GITHUB
+          </a>
         </div>
       </div>
     </main>
